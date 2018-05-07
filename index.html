@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Firebase Authentication</title>
+  <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+
+<div id="app">
+  <h1>Vue School - Firebase Authentication</h1>
+  <div v-if="authUser">
+    <h2>Signed in as {{authUser.email}}</h2>
+    <button @click="signOut">Sign out</button>
+  </div>
+
+  <div v-else>
+    <form @submit.prevent="register">
+      <h2>Register</h2>
+      <input type="email" v-model="email" placeholder="Type your email">
+      <input type="password" v-model="password" placeholder="Pick your password">
+      <button>Register</button>
+    </form>
+
+    <form @submit.prevent="signIn">
+      <h2>Sign in</h2>
+      <input type="email" v-model="email" placeholder="Type your email">
+      <input type="password" v-model="password" placeholder="Type your password">
+      <button>Sign In</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Initialize Firebase
+  const config = {
+    apiKey: "AIzaSyCcT0BUbiZiKUuCw3AtB4U8UExHQkjI2e8",
+    authDomain: "vueschool-firebase-au.firebaseapp.com",
+    databaseURL: "https://vueschool-firebase-au.firebaseio.com",
+    projectId: "vueschool-firebase-au",
+    storageBucket: "vueschool-firebase-au.appspot.com",
+    messagingSenderId: "795856805888"
+  }
+  firebase.initializeApp(config)
+
+  new Vue({
+    el: '#app',
+
+    data: {
+      email: '',
+      password: '',
+      authUser: null
+    },
+
+    methods: {
+      register () {
+        firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+      },
+      signOut () {
+        firebase.auth().signOut()
+      },
+      signIn () {
+        firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+      }
+    },
+
+    created () {
+      firebase.auth().onAuthStateChanged(user => { this.authUser = user })
+    }
+  })
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
