@@ -12,6 +12,8 @@
   <h1>Vue School - Firebase Authentication</h1>
   <div v-if="authUser">
     <h2>Signed in as {{authUser.email}}</h2>
+    <img :src="authUser.photoURL" height="150">
+    <p>What's up, {{authUser.displayName || 'friend'}}?</p>
     <button @click="signOut">Sign out</button>
   </div>
 
@@ -29,6 +31,11 @@
       <input type="password" v-model="password" placeholder="Type your password">
       <button>Sign In</button>
     </form>
+
+    <div>
+      <h2>Sing in with Google</h2>
+      <button @click="signInWithGoogle">Sign In</button>
+    </div>
   </div>
 </div>
 
@@ -64,6 +71,12 @@
       signIn () {
         firebase.auth().signInWithEmailAndPassword(this.email, this.password)
           .catch(error => alert('🤕' + error.message))
+      },
+      signInWithGoogle () {
+        const provider = new firebase.auth.GoogleAuthProvider()
+        firebase.auth().signInWithPopup(provider)
+          .catch(error => alert('🤕' + error.message))
+          .then(data => console.log(data.user, data.credential.accessToken))
       }
     },
 
