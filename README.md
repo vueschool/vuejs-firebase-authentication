@@ -6,7 +6,7 @@ This repository contains the example code for the [Vue.js + Firebase Authenticat
 
 This course will teach you how to use Firebase Authentication in your Vue.js and JavaScript apps.
 
-####Topics covered:
+#### Topics covered:
 
 - How to set up and connect to Firebase Authentication
 - How to sign users up, in and out
